@@ -21,7 +21,7 @@ screen_names = ['gudlaugurthor','M_RoyalFamily','govkorea','TopolanskyLucia','si
                 'alain_berset','AbeShinzo','Macky_Sall','PutinRF_Eng','larsloekke','avucic','alsisiOfficial','bejiCEOfficial','Mbuhari','Rouhani_ir','EPN','CharlesMichel',
                 'ppkamigo','EmmanuelMacron','AndrzejDuda','mauriciomacri','TurnbullMalcolm','MichelTemer','JC_Varela','JuanManSantos','luisguillermosr','marianorajoy']
 
-def get_all_tweets(screen_name):
+def get_all_tweets(screen_name,include_retweets=False):
 #Twitter only allows access to a users most recent 3240 tweets with this method
 
 #authorize twitter, initialize tweepy
@@ -30,7 +30,7 @@ def get_all_tweets(screen_name):
         alltweets = []	
 
 #make initial request for most recent tweets (200 is the maximum allowed count)
-        new_tweets = api.user_timeline(screen_name = screen_name,count=200,tweet_mode='extended')
+        new_tweets = api.user_timeline(screen_name = screen_name,count=200,tweet_mode='extended',include_rts=include_retweets)
 
 #save most recent tweets
         alltweets.extend(new_tweets)
@@ -43,7 +43,7 @@ def get_all_tweets(screen_name):
 ##                print "getting tweets before %s" % (oldest)
 
 #all subsiquent requests use the max_id param to prevent duplicates
-                new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest,tweet_mode='extended')
+                new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest,tweet_mode='extended',include_rts=include_retweets)
 
 #save most recent tweets
                 alltweets.extend(new_tweets)
@@ -56,7 +56,12 @@ def get_all_tweets(screen_name):
 #transform the tweepy tweets into a 2D array that will populate the csv	
         outtweets = [tweet.full_text for tweet in alltweets]#.encode("utf-8")
 
-        with io.open(screen_name+'.txt','w',encoding="utf-8") as f:
+        title = screen_name
+        
+        if not include_retweets:
+                title += "-RT"
+
+        with io.open(title+'.txt','w',encoding="utf-8") as f:
 
                 for tweet in outtweets:
                         f.write(tweet+u' ')
