@@ -21,7 +21,7 @@ screen_names = ['gudlaugurthor','M_RoyalFamily','govkorea','TopolanskyLucia','si
                 'alain_berset','AbeShinzo','Macky_Sall','PutinRF_Eng','larsloekke','avucic','alsisiOfficial','bejiCEOfficial','Mbuhari','Rouhani_ir','EPN','CharlesMichel',
                 'ppkamigo','EmmanuelMacron','AndrzejDuda','mauriciomacri','TurnbullMalcolm','MichelTemer','JC_Varela','JuanManSantos','luisguillermosr','marianorajoy']
 
-def get_all_tweets(screen_name,include_retweets=False,save=True):
+def get_all_tweets(screen_name,include_retweets=False,save=True,dict_output=False):
 #Twitter only allows access to a users most recent 3240 tweets with this method
 
 #authorize twitter, initialize tweepy
@@ -54,7 +54,32 @@ def get_all_tweets(screen_name,include_retweets=False,save=True):
         outtweets = [tweet.full_text for tweet in alltweets]
 
 #save to a text file if the user has elected to save the output
-        if save:
+
+        try:
+                tweets = outtweets[0]
+                for tweet in outtweets[1:]:
+                        tweets += ' ' + tweet
+        except:
+                tweets = ''
+
+        if dict_output:
+                info_dict = {
+                        "index" : {
+                        '_index' : screen_name,
+                        '_type' : "leaders",
+                        '_id' : screen_name
+                        }
+                        }
+                tweet_dict = {
+                        "content" : tweets
+                        }
+                toreturn = []
+                toreturn.append(info_dict)
+                toreturn.append(tweet_dict)
+
+                return toreturn
+        
+        elif save:
 
                 title = screen_name
                 
@@ -79,7 +104,6 @@ def get_all_tweets(screen_name,include_retweets=False,save=True):
                 except:
                         toreturn = u''
                 return toreturn
-        pass
 
 ##if __name__ == '__main__':
 ##        with open('results-RT.csv','wb') as csvfile:
