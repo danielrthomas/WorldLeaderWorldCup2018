@@ -1,7 +1,7 @@
 [
 	{
 		'index' : {
-			'_index' : "world_cup",
+			'_index' : screen_name,
 			'_type' : 'leaders',
 			'_id' : screen_name
 			}
