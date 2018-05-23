@@ -65,7 +65,7 @@ def get_all_tweets(screen_name,include_retweets=False,save=True,dict_output=Fals
         if dict_output:
                 info_dict = {
                         "index" : {
-                        '_index' : screen_name,
+                        '_index' : "world_cup",
                         '_type' : "leaders",
                         '_id' : screen_name
                         }
