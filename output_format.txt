@@ -1,0 +1,12 @@
+[
+	{
+		'index' : {
+			'_index' : screen_name,
+			'_type' : 'leaders',
+			'_id' : screen_name
+			}
+	},
+	{
+		'content' : tweet_text
+	}
+]
