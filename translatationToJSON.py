@@ -83,7 +83,7 @@ def translateTweetsJson(screen_name,include_retweets=False, saveTweets=False, sa
         for country in pycountry.countries:
             countryDict[country.name.lower()] = 0
 
-    tweetDict = get_all_tweets(screen_name, include_retweets, save = saveTweets, dict_output=True, quant = quant)
+    tweetDict = get_all_tweets(screen_name, include_retweets, save = saveTweets, dict_output=True, quant = 4000)
     content = (tweetDict[1]["content"]).split(" ")
     output = ""
     chunk = ""
