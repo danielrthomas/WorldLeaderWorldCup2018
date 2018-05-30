@@ -21,7 +21,7 @@ screen_names = ['gudlaugurthor','M_RoyalFamily','govkorea','TopolanskyLucia','si
                 'alain_berset','AbeShinzo','Macky_Sall','PutinRF_Eng','larsloekke','avucic','alsisiOfficial','bejiCEOfficial','Mbuhari','Rouhani_ir','EPN','CharlesMichel',
                 'ppkamigo','EmmanuelMacron','AndrzejDuda','mauriciomacri','TurnbullMalcolm','MichelTemer','JC_Varela','JuanManSantos','luisguillermosr','marianorajoy']
 
-def get_all_tweets(screen_name,include_retweets=False,save=True,dict_output=False):
+def get_all_tweets(screen_name,include_retweets=False,save=True,dict_output=False,quant=4000):
 #Twitter only allows access to a users most recent 3240 tweets with this method
 
 #authorize twitter, initialize tweepy
@@ -39,7 +39,7 @@ def get_all_tweets(screen_name,include_retweets=False,save=True,dict_output=Fals
         oldest = alltweets[-1].id - 1
 
 #keep grabbing tweets until there are no tweets left to grab
-        while len(new_tweets) > 0:
+        while len(new_tweets) > 0 and len(alltweets) < 4000:
 
 #all subsiquent requests use the max_id param to prevent duplicates
                 new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest,tweet_mode='extended',include_rts=include_retweets)
@@ -52,6 +52,11 @@ def get_all_tweets(screen_name,include_retweets=False,save=True,dict_output=Fals
 
 #get the tweet text into an array	
         outtweets = [tweet.full_text for tweet in alltweets]
+
+        try:
+                outtweets = outtweets[:quant]
+        except:
+                pass
 
 #save to a text file if the user has elected to save the output
 
