@@ -72,7 +72,7 @@ def process(chunk):
         except:
             return ""
 
-def translateTweetsJson(screen_name,include_retweets=False, saveTweets=False, saveTranslation=False, quant = None):
+def translateTweetsJson(screen_name,include_retweets=False, saveTweets=False, saveTranslation=False, quant = 4000):
     global translate
     global countryDict
     if translate == None:
@@ -83,7 +83,7 @@ def translateTweetsJson(screen_name,include_retweets=False, saveTweets=False, sa
         for country in pycountry.countries:
             countryDict[country.name.lower()] = 0
 
-    tweetDict = get_all_tweets(screen_name, include_retweets, save = saveTweets, dict_output=True, quant = 4000)
+    tweetDict = get_all_tweets(screen_name, include_retweets, save = saveTweets, dict_output=True, quant = quant)
     content = (tweetDict[1]["content"]).split(" ")
     output = ""
     chunk = ""
