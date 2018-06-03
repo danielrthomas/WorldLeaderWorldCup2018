@@ -1,9 +1,9 @@
 # build_index.py
 
-ES_HOST = {
-    "host": "localhost",
-    "port": 9200
-}
+# ES_HOST = {
+#     "host": "localhost",
+#     "port": 9200
+# }
 
 try:
     # For Python 3.0 and later
@@ -14,7 +14,9 @@ except ImportError:
 
 
 from elasticsearch import Elasticsearch
-from worldcupleadertweets import get_all_tweets
+from worldcupleadertweets import screen_names
+from translationToJSON import translateTweetsJson
+from scoring_leaders import *
 
 # response = urlopen(FILE_URL)
 # csv_file_object = csv.reader (response)
@@ -40,11 +42,11 @@ from worldcupleadertweets import get_all_tweets
 # create ES client, create index
 es = Elasticsearch (hosts=[ES_HOST])
 
-names = ["turnbullmalcolm", "theresa_may"]
+names = screen_names
 
-for name in names:
-
-    results = get_all_tweets(name, False, False, True)
+for uname in names:
+    name = uname.lower()
+    results = translateTweetsJson(name)
     # print (results)
 
     INDEX_NAME = results[0]['index']['_index']
@@ -68,7 +70,7 @@ for name in names:
 
     print("creating '%s' index..." % (INDEX_NAME))
     res = es.indices.create (index=INDEX_NAME, body=request_body)
-    print(" response: '%s'" % (res))
+    # print(" response: '%s'" % (res))
 
     # bulk index the data
     print("bulk indexing...")
@@ -79,7 +81,7 @@ for name in names:
     # sanity check
     print("searching...")
     res = es.search (index=INDEX_NAME, size=2, body={"query": {"match_all": {}}})
-    print(" response: '%s'" % (res))
+    # print(" response: '%s'" % (res))
 
 # print("results:")
 # for hit in res['hits']['hits']:

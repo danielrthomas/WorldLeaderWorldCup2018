@@ -13,12 +13,10 @@ countryDict = None
 translate = None
 
 def remove_emojis(line):
-    emoji_pattern = re.compile("["
-                               u"\U0001F600-\U0001F64F"  # emoticons
-                               u"\U0001F300-\U0001F5FF"  # symbols & pictographs
-                               u"\U0001F680-\U0001F6FF"  # transport & map symbols
-                               u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
-                               "]+", flags=re.UNICODE)
+    emoji_pattern = re.compile(u"([\U0001F600-\U0001F64F]|[\U0001F300-\U0001F5FF]|[\U0001F680-\U0001F6FF]|[\U0001F1E0-\U0001F1FF])+", flags=re.UNICODE)
+                                # emoticons  # symbols & pictographs
+                                 # transport & map symbols
+                                 # flags (iOS),
     return emoji_pattern.sub(r'', line)  # no emoji
 
 def splitElimination(line):
@@ -63,6 +61,7 @@ def checkCountry(word):
 
 def process(chunk):
     global translate
+    # print (process_names(checkForEnglish(translation(chunk))))
     try:
         return process_names(checkForEnglish(translation(chunk))) + " "
     except:
@@ -72,7 +71,7 @@ def process(chunk):
         except:
             return ""
 
-def translateTweetsJson(screen_name,include_retweets=False, saveTweets=False, saveTranslation=False, quant = 4000):
+def translateTweetsJson(screen_name,include_retweets=False, saveTranslation=False, quant = 4000):
     global translate
     global countryDict
     if translate == None:
@@ -83,19 +82,24 @@ def translateTweetsJson(screen_name,include_retweets=False, saveTweets=False, sa
         for country in pycountry.countries:
             countryDict[country.name.lower()] = 0
 
-    tweetDict = get_all_tweets(screen_name, include_retweets, save = saveTweets, dict_output=True, quant = quant)
+    tweetDict = get_all_tweets(screen_name, include_retweets, dict_output=True, quant = quant)
+    print ("Translating ", screen_name, len(tweetDict[1]["content"]))
     content = (tweetDict[1]["content"]).split(" ")
     output = ""
     chunk = ""
     for word in content:
         if sys.getsizeof(chunk) > 1000:
             output += (re.sub(' +', ' ', process(chunk))).lower()
+            # print (process(chunk))
             chunk = ""
 
-        if sys.getsizeof(word) < 1000:
+        if sys.getsizeof(word) <= 1000:
             chunk += word + " "
 
-    output += process(chunk)
+    output += (re.sub(' +', ' ', process(chunk))).lower()
+
+
+    # output += process(chunk)
     tweetDict[1]["content"] = output
 
     if saveTranslation:
