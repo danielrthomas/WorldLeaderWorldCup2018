@@ -71,7 +71,7 @@ def process(chunk):
         except:
             return ""
 
-def translateTweetsJson(screen_name,include_retweets=False, saveTranslation=False, quant = 4000):
+def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, saveTranslation=False, quant=4000):
     global translate
     global countryDict
     if translate == None:
@@ -82,35 +82,28 @@ def translateTweetsJson(screen_name,include_retweets=False, saveTranslation=Fals
         for country in pycountry.countries:
             countryDict[country.name.lower()] = 0
 
-    tweetDict = get_all_tweets(screen_name, include_retweets, dict_output=True, quant = quant)
-    print ("Translating ", screen_name, len(tweetDict[1]["content"]))
+    tweetDict = get_all_tweets(screen_name, include_retweets, save=saveTweets, dict_output=True, quant=quant)
     content = (tweetDict[1]["content"]).split(" ")
     output = ""
     chunk = ""
     for word in content:
         if sys.getsizeof(chunk) > 1000:
             output += (re.sub(' +', ' ', process(chunk))).lower()
-            # print (process(chunk))
             chunk = ""
 
-        if sys.getsizeof(word) <= 1000:
+        if sys.getsizeof(word) < 1000:
             chunk += word + " "
 
-    output += (re.sub(' +', ' ', process(chunk))).lower()
-
-
-    # output += process(chunk)
+    output += process(chunk)
     tweetDict[1]["content"] = output
 
     if saveTranslation:
-        name = screen_name
-        if include_retweets:
-            name += "-RT"
-        name += "_translatedJSON"
-
-        with open(name, "w") as f:
+        with open("JSONs/" + screen_name.lower(), "w") as f:
             data = json.dumps(tweetDict)
             f.write(data)
 
     return tweetDict
+
+
+translateTweetsJson("alain_berset", False, False, True)
 
