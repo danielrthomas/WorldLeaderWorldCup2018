@@ -5,7 +5,7 @@ import sys
 import json
 import string
 import re
-from worldcupleadertweets import get_all_tweets
+from worldcupleadertweets import get_all_tweets,screen_names
 from googletrans import Translator
 
 dictionary = None
@@ -98,12 +98,15 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
     tweetDict[1]["content"] = output
 
     if saveTranslation:
-        with open("JSONs/" + screen_name.lower(), "w") as f:
+        with open("JSONs/" + screen_name.lower()+'.json', "w") as f:
             data = json.dumps(tweetDict)
             f.write(data)
 
     return tweetDict
 
 
-translateTweetsJson("alain_berset", False, False, True)
+for s in screen_names:
+    print s
+    translateTweetsJson(s, False, False, True)
+    print s,'done'
 
