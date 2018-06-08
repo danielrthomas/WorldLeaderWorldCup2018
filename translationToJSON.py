@@ -105,8 +105,10 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
     return tweetDict
 
 
-for s in screen_names:
-    print(s)
-    translateTweetsJson(s, False, False, True)
-    print(s,'done')
-
+# for s in screen_names:
+#     print(s)
+#     translateTweetsJson(s, False, False, True)
+#     print(s,'done')
+# print("sigmargabriel")
+# translateTweetsJson("sigmargabriel", False, False, True)
+# print('done')
