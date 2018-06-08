@@ -44,7 +44,7 @@ def make_tweet_json():
     content = []
     screen_names = ["gudlaugurthor", "m_royalfamily"]
     for name in screen_names:
-        with open ("JSONs/" + name.lower () + '.json', "r") as f:
+        with open ("JSONs/" + name.lower (), "r") as f:
             for line in f:
                 data = json.loads(line)
                 content.append(data[1]["content"])
