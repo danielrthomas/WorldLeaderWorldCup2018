@@ -1,0 +1,25 @@
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+
+<h1>World Cup Leader Tweets</h1>
+<h3>A Northwestern University Project</h3>
+
+<table>
+    <tr>
+    	<th>Match Value</th>
+    	<th>Country</th>
+    	<th>Handle</th>
+    	<th colspan=5>Top Matched Words</th>
+    </tr>
+    {% for item in rank %}
+    	<tr>
+	    	<td>{{item[0]}}</td>
+	    	<td>{{item[1]}}</td>
+	    	<td>{{item[2]}}</td>
+	    	<td>{{item[3][0]}}</td>
+	    	<td>{{item[3][1]}}</td>
+	    	<td>{{item[3][2]}}</td>
+	    	<td>{{item[3][3]}}</td>
+	    	<td>{{item[3][4]}}</td>
+	   </tr>
+    {% endfor %}
+</table>
