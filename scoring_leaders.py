@@ -5,7 +5,7 @@ ES_HOST = {
 
 #from elasticsearch import Elasticsearch
 from worldcupleadertweets import *
-from translatationToJSON import translateTweetsJson
+from translationToJSON import translateTweetsJson
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
 import json
@@ -98,23 +98,23 @@ def score_user(screen_name):
         maximum = max(maximum, myScore)
         sum += float(myScore)
         scores[name] = myScore
-        print(name+" DIVIDED = " + str(total_score/len(words)))
+##        print(name+" DIVIDED = " + str(total_score/len(words)))
 
-    
-    avg = float(sum) / float(len(screen_names))
+    sc = [scores[word] for word in scores]
 
-    # print("MAX: " + str(maximum))
-    # print("MIN: " + str(minimum))
-    # print("AVG: " + str(avg))
-    
-    range = maximum - minimum
-    avg_high = avg + range
-    avg_low = avg - range
+    m = min(sc)
+    ran = max(sc) - m
+    av = sum(sc)/len(sc)
+
+    for name in scores:
+        scores[name] = (scores[name]-m)/ran
+
+    print(scores)
 
     return word_scores
 
 
-#compute_idf()
+##compute_idf()
 print(score_user("jc_varela"))
 # print(score_user("realdonaldtrump"))
 # print(score_user("gudlaugurthor"))

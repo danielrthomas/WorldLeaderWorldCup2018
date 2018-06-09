@@ -11,5 +11,5 @@ def input_handle():
         return render_template('input_handle.html')
     else:
         pass
-        #we have username, now compute the scores and return 
+        #we have username, now compute the scores and return
 app.run()
