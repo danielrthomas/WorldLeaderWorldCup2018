@@ -115,9 +115,10 @@ def score_user(leader_name):
 def match_handle(user_handle):
 
     match_val = leader_user_score(user_handle)
+    top_words = score_user(user_handle)
     final_result = []
     for name in screen_names:
-        result = [ leader_country[name], match_val[name], user_handle, score_user(name)[name]]
+        result = [match_val[name],leader_country[name],name,top_words[name]]
         final_result.append(result)
 
     return final_result
