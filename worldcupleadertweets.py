@@ -17,9 +17,20 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_key, access_secret)
 api = tweepy.API(auth)
 
-screen_names = ['gudlaugurthor','M_RoyalFamily','govkorea','TopolanskyLucia','sigmargabriel','antoniocostapm','margotwallstrom','KingSalman','KolindaGK','theresa_may',
-                'alain_berset','AbeShinzo','Macky_Sall','PutinRF_Eng','larsloekke','avucic','alsisiOfficial','bejiCEOfficial','Mbuhari','Rouhani_ir','EPN','CharlesMichel',
-                'ppkamigo','EmmanuelMacron','AndrzejDuda','mauriciomacri','TurnbullMalcolm','MichelTemer','JC_Varela','JuanManSantos','luisguillermosr','marianorajoy']
+screen_names = ['gudlaugurthor', 'm_royalfamily', 'govkorea', 'topolanskylucia', 'sigmargabriel', 'antoniocostapm', 'margotwallstrom', 'kingsalman', 'kolindagk', 'theresa_may',
+                'alain_berset', 'abeshinzo', 'macky_sall', 'putinrf_eng', 'larsloekke', 'avucic', 'alsisiofficial', 'bejiceofficial', 'mbuhari', 'rouhani_ir', 'epn', 'charlesmichel',
+                'ppkamigo', 'emmanuelmacron', 'andrzejduda', 'mauriciomacri', 'turnbullmalcolm', 'micheltemer', 'jc_varela', 'juanmansantos', 'luisguillermosr', 'marianorajoy']
+
+countries = ['Iceland','Morocco','South Korea','Uruguay','Germany','Portugal','Sweden','Saudi Arabia','Croatia','England','Switzerland','Japan','Senegal','Russia','Denmark','Serbia',
+             'Egypt','Tunisia','Nigeria','Iran','Mexico','Belgium','Peru','France','Poland','Argentina','Australia','Brazil','Panama','Columbia','Costa Rica','Spain']
+
+leader_country = {'mauriciomacri': 'Argentina', 'emmanuelmacron': 'France', 'juanmansantos': 'Columbia', 'mbuhari': 'Nigeria', 'putinrf_eng': 'Russia', 'alain_berset': 'Switzerland',
+                  'larsloekke': 'Denmark', 'ppkamigo': 'Peru', 'micheltemer': 'Brazil', 'macky_sall': 'Senegal', 'margotwallstrom': 'Sweden', 'm_royalfamily': 'Morocco',
+                  'topolanskylucia': 'Uruguay', 'govkorea': 'South Korea', 'rouhani_ir': 'Iran', 'abeshinzo': 'Japan', 'kingsalman': 'Saudi Arabia', 'sigmargabriel': 'Germany',
+                  'luisguillermosr': 'Costa Rica', 'jc_varela': 'Panama', 'charlesmichel': 'Belgium', 'kolindagk': 'Croatia', 'marianorajoy': 'Spain', 'alsisiofficial': 'Egypt',
+                  'epn': 'Mexico', 'bejiceofficial': 'Tunisia', 'theresa_may': 'England', 'andrzejduda': 'Poland', 'turnbullmalcolm': 'Australia', 'gudlaugurthor': 'Iceland',
+                  'antoniocostapm': 'Portugal', 'avucic': 'Serbia'}
+
 
 def get_all_tweets(screen_name,include_retweets=False,save=True,dict_output=False,quant=4000):
 #Twitter only allows access to a users most recent 3240 tweets with this method
