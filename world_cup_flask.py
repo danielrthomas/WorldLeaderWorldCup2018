@@ -13,5 +13,4 @@ def main():
         ranking = [[25,'Country','realDonaldTrump',['nasty','woman','im','with','her']]]
         return render_template('result.html',rank=ranking)
 
-    
 app.run()

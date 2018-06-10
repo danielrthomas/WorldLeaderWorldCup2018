@@ -50,7 +50,7 @@ def get_all_tweets(screen_name,include_retweets=False,save=True,dict_output=Fals
         oldest = alltweets[-1].id - 1
 
 #keep grabbing tweets until there are no tweets left to grab
-        while len(new_tweets) > 0 and len(alltweets) < 4000:
+        while len(new_tweets) > 0 and len(alltweets) < quant:
 
 #all subsiquent requests use the max_id param to prevent duplicates
                 new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest,tweet_mode='extended',include_rts=include_retweets)
