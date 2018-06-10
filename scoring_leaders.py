@@ -43,6 +43,18 @@ def compute_idf():
             tfidf = tfidf_vect.fit([data[1]['content']])
             pickle.dump(tfidf, open('pickle/' + name.lower(), "wb"))
 
+def compute_idf2():
+    tfidf_vect = TfidfVectorizer(stop_words="english")
+    vects = {}
+    for name in screen_names:
+        with open ("JSONs/" + name.lower (), "r") as f:
+            for line in f:
+                data = json.loads(line)
+
+            tfidf = tfidf_vect.fit([data[1]['content']])
+            vects[name.lower()] = tfidf
+    pickle.dump(vects, open('pickle/some_file_name', "wb"))
+
 
 # def compute_idf():
     #initialize an empty vectorizer
@@ -63,7 +75,7 @@ def leader_user_score(screen_name):
     vectorizer = TfidfVectorizer (stop_words='english')
 
     for name in screen_names:
-        with open ("JSONs/" + name.lower (), "r") as f:
+        with open("JSONs/" + name.lower(), "r") as f:
             for line in f:
                 data = json.loads(line)
         tfidf = vectorizer.fit_transform([user_tweets, data[1]["content"]])
@@ -82,6 +94,32 @@ def score_user(leader_name):
 
         tfidf_vect = pickle.load (open("pickle/" + name.lower(), "rb"))
 
+        # print (user_tweets)
+        # for unique_word in set(user_tweets.split(" ")):
+        for unique_word in set(user_tweets.split(" ")):
+
+            #is the word in idf dictionary?
+            if unique_word in tfidf_vect.get_feature_names():
+              #word importance weight
+
+              idf_index = tfidf_vect.get_feature_names().index(unique_word)
+              idf_score = tfidf_vect.idf_[idf_index]
+              word_score = user_tweets.count(unique_word) * idf_score
+              word_scores.append((word_score,unique_word))
+
+        similar_word_scores[name] = word_scores
+
+    return similar_word_scores
+
+def score_user2(leader_name):
+    user_tweets = translateTweetsJson (leader_name, False, False, False, 25)[1]["content"]
+    word_scores = []
+    similar_word_scores = {}
+
+    vects = pickle.load(open("pickle/some_file_name", "rb"))
+    for name in screen_names:
+
+        tfidf_vect = vects[name.lower()]
         # print (user_tweets)
         # for unique_word in set(user_tweets.split(" ")):
         for unique_word in set(user_tweets.split(" ")):
