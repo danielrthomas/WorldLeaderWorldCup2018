@@ -84,7 +84,10 @@ def score_user(leader_name):
 
         # print (user_tweets)
         # for unique_word in set(user_tweets.split(" ")):
-        for unique_word in set(user_tweets.split(" ")):
+        words = set(user_tweets.split(" "))
+        # print (words)
+        # exit()
+        for unique_word in words:
 
             #is the word in idf dictionary?
             if unique_word in tfidf_vect.get_feature_names():
@@ -95,6 +98,7 @@ def score_user(leader_name):
               word_score = user_tweets.count(unique_word) * idf_score
               word_scores.append((word_score,unique_word))
 
+        word_scores.sort (key=lambda x: x[0])
         similar_word_scores[name] = word_scores
 
     return similar_word_scores
@@ -155,5 +159,5 @@ print(score_user("jc_varela"))
 # print(score_user("realdonaldtrump"))
 
 
-
-
+def match_handle(user_handle):
+    country = leader_country[""]
