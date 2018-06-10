@@ -40,8 +40,7 @@ def compute_idf():
         with open ("JSONs/" + name.lower (), "r") as f:
             for line in f:
                 data = json.loads(line)
-
-            tfidf = tfidf_vect.fit([data[1]['content']])
+        tfidf = tfidf_vect.fit([data[1]['content']])
         vects[name.lower()] = tfidf
     pickle.dump(vects, open('pickle/some_file_name', "wb"))
 
@@ -76,8 +75,8 @@ def leader_user_score(user_name):
     return similar_scores
 
 
-def score_user(leader_name):
-    user_tweets = translateTweetsJson (leader_name, False, False, False, 25)[1]["content"]
+def score_user(user_handle):
+    user_tweets = translateTweetsJson (user_handle, False, False, False, 25)[1]["content"]
     similar_word_scores = {}
     vects = pickle.load (open ("pickle/some_file_name", "rb"))
     for name in screen_names:
