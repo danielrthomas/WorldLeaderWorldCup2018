@@ -35,13 +35,15 @@ import json
 
 def compute_idf():
     tfidf_vect = TfidfVectorizer(stop_words="english")
+    vects = {}
     for name in screen_names:
         with open ("JSONs/" + name.lower (), "r") as f:
             for line in f:
                 data = json.loads(line)
 
             tfidf = tfidf_vect.fit([data[1]['content']])
-            pickle.dump(tfidf, open('pickle/' + name.lower(), "wb"))
+        vects[name.lower()] = tfidf
+    pickle.dump(vects, open('pickle/some_file_name', "wb"))
 
 
 # def compute_idf():
@@ -57,8 +59,8 @@ def compute_idf():
 
 # tfidf_vect = pickle.load("some_file_name")
 
-def leader_user_score(screen_name):
-    user_tweets = translateTweetsJson(screen_name, False, False, False, 25)[1]["content"]
+def leader_user_score(user_name):
+    user_tweets = translateTweetsJson(user_name, False, False, False, 25)[1]["content"]
     similar_scores = {}
     vectorizer = TfidfVectorizer (stop_words='english')
 
@@ -76,17 +78,18 @@ def leader_user_score(screen_name):
 
 def score_user(leader_name):
     user_tweets = translateTweetsJson (leader_name, False, False, False, 25)[1]["content"]
-    word_scores = []
     similar_word_scores = {}
+    vects = pickle.load (open ("pickle/some_file_name", "rb"))
     for name in screen_names:
-
-        tfidf_vect = pickle.load (open("pickle/" + name.lower(), "rb"))
+        word_scores = []
+        tfidf_vect = vects[name.lower()]
 
         # print (user_tweets)
         # for unique_word in set(user_tweets.split(" ")):
-        words = set(user_tweets.split(" "))
+        words = list(set(user_tweets.split(" ")))
         # print (words)
         # exit()
+
         for unique_word in words:
 
             #is the word in idf dictionary?
@@ -98,66 +101,26 @@ def score_user(leader_name):
               word_score = user_tweets.count(unique_word) * idf_score
               word_scores.append((word_score,unique_word))
 
-        word_scores.sort (key=lambda x: x[0])
-        similar_word_scores[name] = word_scores
+        word_scores.sort (key=lambda x: x[0], reverse=True)
+        similar_word_scores[name] = word_scores[:5]
 
     return similar_word_scores
 
 
-# def score_user(screen_name):
-#     user_tweets = translateTweetsJson(screen_name, False, False, False, 25)[1]["content"]
-#     words = user_tweets.split(" ")
-#     #words = words[:500]
-#     print("NUM WORDS = " + str(len(words)))
-#     # print(user_tweets)
-#     word_scores = []
-#     scores = {}
-#     minimum = float("inf")
-#     maximum = float("inf")
-#     sum = float(0)
-#     for name in screen_names:
-#         tfidf_vect = pickle.load (open("pickle/"+name.lower(), "rb"))
-#         total_score = 0
-#         setHere = set(words)
-#         # for unique_word in set(user_tweets.split(" ")):
-#         for unique_word in setHere:
-#
-#             #is the word in idf dictionary?
-#             # print (tfidf_vect.get_feature_names())
-#             #print (unique_word)
-#             if unique_word in tfidf_vect.get_feature_names():
-#               #word importance weight
-#
-#               idf_index = tfidf_vect.get_feature_names().index(unique_word)
-#               idf_score = tfidf_vect.idf_[idf_index]
-#               word_score = user_tweets.count(unique_word) * idf_score
-#               total_score += word_score
-#               word_scores.append((word_score,unique_word))
-#         myScore = total_score/len(words)
-#         minimum = min(minimum, myScore)
-#         maximum = max(maximum, myScore)
-#         sum += float(myScore)
-#         scores[name] = myScore
-# ##        print(name+" DIVIDED = " + str(total_score/len(words)))
-#
-#     sc = [scores[word] for word in scores]
-#     print (sc)
-#     m = min(sc)
-#     ran = max(sc) - m
-#     av = sum(sc)/float(len(sc))
-#
-#     for name in scores:
-#         scores[name] = (scores[name]-m)/ran
-#
-#     print(scores)
-#
-#     return word_scores
-
-
 # compute_idf()
-print(score_user("jc_varela"))
+# print(score_user("jc_varela")["jc_varela"])
 # print(score_user("realdonaldtrump"))
 
 
 def match_handle(user_handle):
-    country = leader_country[""]
+
+    match_val = leader_user_score(user_handle)
+    top_words = score_user(user_handle)
+    final_result = []
+    for name in screen_names:
+        result = [ leader_country[name], match_val[name], user_handle, score_user(name)[name]]
+        final_result.append(result)
+
+    return final_result
+
+# print (match_handle("jc_varela"))
