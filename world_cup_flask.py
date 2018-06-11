@@ -1,4 +1,5 @@
 import json
+import pickle
 from flask import Flask,render_template_string,request,render_template
 from scoring import match_handle, compute_idf
 app = Flask(__name__)
