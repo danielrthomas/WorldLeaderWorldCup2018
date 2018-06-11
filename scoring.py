@@ -59,8 +59,7 @@ def compute_idf():
 
 # tfidf_vect = pickle.load("some_file_name")
 
-def leader_user_score(user_name):
-    user_tweets = translateTweetsJson(user_name, False, False, False, 25)[1]["content"]
+def leader_user_score(user_name,user_tweets):
     similar_scores = {}
     vectorizer = TfidfVectorizer (stop_words='english')
 
@@ -76,8 +75,7 @@ def leader_user_score(user_name):
     return similar_scores
 
 
-def score_user(user_handle):
-    user_tweets = translateTweetsJson (user_handle, False, False, False, 25)[1]["content"]
+def score_user(user_handle,user_tweets):
     similar_word_scores = {}
     vects = pickle.load (open ("pickle/some_file_name", "rb"))
     words = list (set (user_tweets.split (" ")))
@@ -114,9 +112,11 @@ def score_user(user_handle):
 
 
 def match_handle(user_handle):
+    
+    user_tweets = translateTweetsJson(user_handle, False, False, False, 25)[1]["content"]
 
-    match_val = leader_user_score(user_handle)
-    top_words = score_user(user_handle)
+    match_val = leader_user_score(user_handle,user_tweets)
+    top_words = score_user(user_handle,user_tweets)
     final_result = []
     for name in screen_names:
         result = [match_val[name],leader_country[name],name,top_words[name]]
