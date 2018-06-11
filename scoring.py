@@ -34,9 +34,10 @@ import json
 
 
 def compute_idf():
-    tfidf_vect = TfidfVectorizer(stop_words="english")
+    # tfidf_vect = TfidfVectorizer(stop_words="english")
     vects = {}
     for name in screen_names:
+        tfidf_vect = TfidfVectorizer (stop_words="english")
         with open ("JSONs/" + name.lower (), "r") as f:
             for line in f:
                 data = json.loads(line)
@@ -79,13 +80,14 @@ def score_user(user_handle):
     user_tweets = translateTweetsJson (user_handle, False, False, False, 25)[1]["content"]
     similar_word_scores = {}
     vects = pickle.load (open ("pickle/some_file_name", "rb"))
+    words = list (set (user_tweets.split (" ")))
+
     for name in screen_names:
         word_scores = []
         tfidf_vect = vects[name.lower()]
 
         # print (user_tweets)
         # for unique_word in set(user_tweets.split(" ")):
-        words = list(set(user_tweets.split(" ")))
         # print (words)
         # exit()
 
@@ -120,6 +122,7 @@ def match_handle(user_handle):
         result = [match_val[name],leader_country[name],name,top_words[name]]
         final_result.append(result)
 
+    final_result.sort(key=lambda  x:x[0], reverse=True)
     return final_result
 
 # print (match_handle("jc_varela"))
