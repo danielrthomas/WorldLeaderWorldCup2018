@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 compute_idf()
 vects = pickle.load (open ("pickle/some_file_name", "rb"))
+dic = pickle.load (open ("pickle/dictionary", "rb"))
 
 @app.route('/')
 def main():
@@ -16,7 +17,7 @@ def main():
     else:
         #we have username, now compute the scores and return
         try:
-            ranking = match_handle(handle,vects)
+            ranking = match_handle(handle,vects,dic)
         except:
             ranking = []
         return render_template('result.html',rank=ranking)

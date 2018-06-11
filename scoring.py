@@ -110,9 +110,9 @@ def score_user(user_handle,user_tweets,vects):
 # print(score_user("realdonaldtrump"))
 
 
-def match_handle(user_handle,vects):
+def match_handle(user_handle,vects,dic):
     
-    user_tweets = translateTweetsJson(user_handle, False, False, False, 25)[1]["content"]
+    user_tweets = translateTweetsJson(user_handle, False, False, False, 25,dic)[1]["content"]
 
     match_val = leader_user_score(user_handle,user_tweets)
     top_words = score_user(user_handle,user_tweets,vects)
