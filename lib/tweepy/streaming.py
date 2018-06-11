@@ -14,8 +14,6 @@ from time import sleep
 
 import six
 
-import ssl
-
 from tweepy.models import Status
 from tweepy.api import API
 from tweepy.error import TweepError

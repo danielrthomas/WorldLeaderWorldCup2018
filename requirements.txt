@@ -21,5 +21,3 @@ scikit_learn == 0.18.1
 
 # worldcupleadertweets.py: 1
 tweepy == 3.3.0
-
-ssl
