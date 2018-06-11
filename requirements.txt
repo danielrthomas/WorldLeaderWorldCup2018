@@ -1,0 +1,13 @@
+flask
+tweepy
+io
+nltk
+enchant
+pycountry
+sys
+json
+string
+re
+googletrans
+sklearn
+pickle
