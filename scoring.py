@@ -75,9 +75,8 @@ def leader_user_score(user_name,user_tweets):
     return similar_scores
 
 
-def score_user(user_handle,user_tweets):
+def score_user(user_handle,user_tweets,vects):
     similar_word_scores = {}
-    vects = pickle.load (open ("pickle/some_file_name", "rb"))
     words = list (set (user_tweets.split (" ")))
 
     for name in screen_names:
@@ -111,12 +110,12 @@ def score_user(user_handle,user_tweets):
 # print(score_user("realdonaldtrump"))
 
 
-def match_handle(user_handle):
+def match_handle(user_handle,vects):
     
     user_tweets = translateTweetsJson(user_handle, False, False, False, 25)[1]["content"]
 
     match_val = leader_user_score(user_handle,user_tweets)
-    top_words = score_user(user_handle,user_tweets)
+    top_words = score_user(user_handle,user_tweets,vects)
     final_result = []
     for name in screen_names:
         result = [match_val[name],leader_country[name],name,top_words[name]]
