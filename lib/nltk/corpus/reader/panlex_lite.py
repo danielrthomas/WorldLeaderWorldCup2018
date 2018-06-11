@@ -12,7 +12,6 @@ for more information on PanLex Lite.
 """
 
 import os
-import sqlite3
 
 from nltk.corpus.reader.api import CorpusReader
 
