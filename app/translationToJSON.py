@@ -71,6 +71,7 @@ def checkForEnglish(line):
     tokens = removePunc.split(" ")
     newline = []
     for word in tokens:
+        f.write(word + " WORDHERE\n")
         if ((len(word) == 1 and word.lower() in ['i','a']) or (len(word) > 2 and word != 'amp' and dictionary.check(word.lower()) and not checkCountry(word))) and word.lower() not in remove:
             newline.append(word)
 
@@ -110,7 +111,6 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
     if countryDict == None:
         countryDict = {}
         for country in pycountry.countries:
-            f.write("HERE\n")
             countryDict[country.name.lower()] = 0
 
     tweetDict = get_all_tweets(screen_name, include_retweets, save=saveTweets, dict_output=True, quant=quant)
@@ -119,17 +119,14 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
     chunk = ""
     for word in content:
         if sys.getsizeof(chunk) > 1000:
-            f.write("HERE2\n")
             output += (re.sub(' +', ' ', process(chunk))).lower()
             chunk = ""
 
         if sys.getsizeof(word) < 1000:
-            f.write("HERE3\n")
             chunk += word + " "
 
     output += (re.sub(' +', ' ', process(chunk))).lower()
     tweetDict[1]["content"] = output
-    f.write("HERE4\n")
     if saveTranslation:
         with open("JSONs/" + screen_name.lower(), "w") as f:
             data = json.dumps(tweetDict)
