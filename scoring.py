@@ -113,11 +113,21 @@ def score_user(user_handle,user_tweets,vects):
 
 def match_handle(user_handle,vects):
 
-    
+    start = time.time()
     user_tweets = translateTweetsJson(user_handle, False, False, False, 100)[1]["content"]
+    end = time.time()
+    print("translateTweetsJson "+str(end - start))
 
+    start = time.time()
     match_val = leader_user_score(user_handle,user_tweets)
+    end = time.time()
+    print("leader_user_score "+str(end - start))
+
+    start = time.time()
     top_words = score_user(user_handle,user_tweets,vects)
+    end = time.time()
+    print("score_user "+str(end - start))   
+    
     final_result = []
     for i,name in enumerate(screen_names):
         result = [match_val[name],leader_country[name],name,top_words[name]]
