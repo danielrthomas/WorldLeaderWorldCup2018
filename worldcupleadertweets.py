@@ -1,4 +1,10 @@
+import base64
+import requests
+import sys
+import csv
+import re
 import tweepy
+from tweepy import OAuthHandler
 import io
 
 consumer_key = "PVWE9FmBmQr9JLTFZhFhWmm1p"
