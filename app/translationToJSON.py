@@ -52,6 +52,7 @@ def translation(line):
 def process_names(tokens):
     global f
     here = nltk.ne_chunk(nltk.pos_tag(tokens))
+    f.write(here)
     sent = ''
     for x in here:
         if not hasattr(x, 'label') and not isinstance(x, nltk.Tree):
