@@ -11,20 +11,20 @@ except:
     vects = pickle.load (open ("pickle/some_file_name", "rb"))
 
 @app.route('/')
-def main():
-    return render_template('input_handle.html')
 # def main():
-#     handle = request.args.get('handle')
-#     if handle == None or handle == '':
-#         #get username
-#         return render_template('input_handle.html')
-#     else:
-#         #we have username, now compute the scores and return
-#         try:
-#             ranking = match_handle(handle,vects)
-#         except:
-#             ranking = []
-#         return render_template('result.html',rank=ranking)
+#     return render_template('input_handle.html')
+def main():
+    handle = request.args.get('handle')
+    if handle == None or handle == '':
+        #get username
+        return render_template('input_handle.html')
+    else:
+        #we have username, now compute the scores and return
+        try:
+            ranking = match_handle(handle,vects)
+        except:
+            ranking = []
+        return render_template('result.html',rank=ranking)
 
 @app.route('/contact')
 def contact():

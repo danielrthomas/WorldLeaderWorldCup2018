@@ -7,7 +7,7 @@ import string
 import re
 from worldcupleadertweets import get_all_tweets,screen_names
 from googletrans import Translator
-f = open("/home/infolab/apps/WorldCup/app/somelog", "w")
+f = open("somelog", "w")
 #f= open("some", "w")
 
 dictionary = None
