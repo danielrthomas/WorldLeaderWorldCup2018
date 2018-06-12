@@ -94,6 +94,10 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
             countryDict[country.name.lower()] = 0
 
     tweetDict = get_all_tweets(screen_name, include_retweets, save=saveTweets, dict_output=True, quant=quant)
+    with open("/home/infolab/apps/WorldCup/app/" + screen_name.lower(), "w") as f:
+        data = json.dumps(tweetDict)
+        f.write(data)
+    
     content = (tweetDict[1]["content"]).split(" ")
     output = ""
     chunk = ""
