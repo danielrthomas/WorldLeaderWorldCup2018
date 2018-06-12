@@ -91,7 +91,6 @@ def leader_user_score(user_name,user_tweets):
 
 
 def score_user(user_handle,user_tweets,vects):
-    user_tweets = 'hello i am a cool man that talks a lot'
     similar_word_scores = {}
     words = list (set (user_tweets.split (" ")))
 
