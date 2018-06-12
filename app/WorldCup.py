@@ -12,6 +12,7 @@ except:
 
 @app.route('/')
 def main():
+    return render_template('input_handle.html')
     handle = request.args.get('handle')
     if handle == None or handle == '':
         #get username
