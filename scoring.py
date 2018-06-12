@@ -117,8 +117,8 @@ def match_handle(user_handle,vects):
     match_val = leader_user_score(user_handle,user_tweets)
     top_words = score_user(user_handle,user_tweets,vects)
     final_result = []
-    for name in screen_names:
-        result = [match_val[name],leader_country[name],name,top_words[name]]
+    for i,name in enumerate(screen_names):
+        result = [i+1,match_val[name],leader_country[name],name,top_words[name]]
         final_result.append(result)
 
     final_result.sort(key=lambda  x:x[0], reverse=True)
