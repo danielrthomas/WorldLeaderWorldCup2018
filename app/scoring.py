@@ -115,6 +115,8 @@ def score_user(user_handle,user_tweets,vects):
               word_scores.append((word_score,unique_word))
 
         word_scores.sort (key=lambda x: x[0], reverse=True)
+        if len(word_scores) < 5:
+            word_scores = [('',''),('',''),('',''),('',''),('','')]
         similar_word_scores[name] = word_scores[:5]
 
     return similar_word_scores
