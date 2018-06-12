@@ -12,5 +12,3 @@ sys.path.append('/home/infolab/apps/WorldCup/app')
 sys.stdout = sys.stderr
 
 from WorldCup import app as application
-if __name__ == "__main__":
-	application.run()
