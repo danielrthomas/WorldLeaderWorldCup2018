@@ -34,7 +34,7 @@ def splitElimination(line):
         elif word != '' and 'http' not in word and word[0] != '@':
             newline.append(word)
 
-return ' '.join(newline)
+    return ' '.join(newline)
 
 
 def translation(line):
@@ -63,7 +63,7 @@ def checkForEnglish(line):
         if ((len(word) == 1 and word.lower() in ['i','a']) or (len(word) > 2 and word != 'amp' and dictionary.check(word.lower()) and not checkCountry(word))) and word.lower() not in remove:
             newline.append(word)
 
-return newline
+    return newline
 
 
 def checkCountry(word):
@@ -87,13 +87,13 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
     global countryDict
     if translate == None:
         translate = Translator()
-    
+
     if countryDict == None:
         countryDict = {}
         for country in pycountry.countries:
             countryDict[country.name.lower()] = 0
 
-tweetDict = get_all_tweets(screen_name, include_retweets, save=saveTweets, dict_output=True, quant=quant)
+    tweetDict = get_all_tweets(screen_name, include_retweets, save=saveTweets, dict_output=True, quant=quant)
     content = (tweetDict[1]["content"]).split(" ")
     output = ""
     chunk = ""
@@ -101,19 +101,19 @@ tweetDict = get_all_tweets(screen_name, include_retweets, save=saveTweets, dict_
         if sys.getsizeof(chunk) > 1000:
             output += (re.sub(' +', ' ', process(chunk))).lower()
             chunk = ""
-        
+
         if sys.getsizeof(word) < 1000:
             chunk += word + " "
 
-output += (re.sub(' +', ' ', process(chunk))).lower()
+    output += (re.sub(' +', ' ', process(chunk))).lower()
     tweetDict[1]["content"] = output
-    
+
     if saveTranslation:
         with open("JSONs/" + screen_name.lower(), "w") as f:
             data = json.dumps(tweetDict)
             f.write(data)
 
-return tweetDict
+    return tweetDict
 
 
 # for s in screen_names:
