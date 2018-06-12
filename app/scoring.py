@@ -39,12 +39,21 @@ def compute_idf():
     vects = {}
     for name in screen_names:
         tfidf_vect = TfidfVectorizer (stop_words="english")
-        with open ("/home/infolab/apps/WorldCup/app/JSONs/" + name.lower (), "r") as f:
-            for line in f:
-                data = json.loads(line)
+        try:
+            with open ("/home/infolab/apps/WorldCup/app/JSONs/" + name.lower (), "r") as f:
+                for line in f:
+                    data = json.loads(line)
+        except:
+            with open ("JSONs/" + name.lower (), "r") as f:
+                for line in f:
+                    data = json.loads(line)
+
         tfidf = tfidf_vect.fit([data[1]['content']])
         vects[name.lower()] = tfidf
-    pickle.dump(vects, open('/home/infolab/apps/WorldCup/app/pickle/some_file_name', "wb"))
+    try:
+        pickle.dump(vects, open('/home/infolab/apps/WorldCup/app/pickle/some_file_name', "wb"))
+    except:
+        pickle.dump (vects, open ('pickle/some_file_name', "wb"))
 
 
 # def compute_idf():
@@ -65,9 +74,14 @@ def leader_user_score(user_name,user_tweets):
     vectorizer = TfidfVectorizer (stop_words='english')
 
     for name in screen_names:
-        with open ("/home/infolab/apps/WorldCup/app/JSONs/" + name.lower (), "r") as f:
-            for line in f:
-                data = json.loads(line)
+        try:
+            with open ("/home/infolab/apps/WorldCup/app/JSONs/" + name.lower (), "r") as f:
+                for line in f:
+                    data = json.loads(line)
+        except:
+            with open ("JSONs/" + name.lower (), "r") as f:
+                for line in f:
+                    data = json.loads(line)
         tfidf = vectorizer.fit_transform([user_tweets, data[1]["content"]])
 
         #cosine similarity

@@ -109,7 +109,7 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
     tweetDict[1]["content"] = output
 
     if saveTranslation:
-        with open("/home/infolab/apps/WorldCup/app/JSONs/" + screen_name.lower(), "w") as f:
+        with open("JSONs/" + screen_name.lower(), "w") as f:
             data = json.dumps(tweetDict)
             f.write(data)
 

@@ -5,7 +5,10 @@ from scoring import match_handle, compute_idf
 app = Flask(__name__)
 
 compute_idf()
-vects = pickle.load (open ("/home/infolab/apps/WorldCup/app/pickle/some_file_name", "rb"))
+try:
+    vects = pickle.load (open ("/home/infolab/apps/WorldCup/app/pickle/some_file_name", "rb"))
+except:
+    vects = pickle.load (open ("pickle/some_file_name", "rb"))
 
 @app.route('/')
 def main():
