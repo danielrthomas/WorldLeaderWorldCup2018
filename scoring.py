@@ -9,6 +9,7 @@ from translationToJSON import translateTweetsJson
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
 import json
+import time
 
 # create ES client, create index
 #es = Elasticsearch (hosts=[ES_HOST])
@@ -111,6 +112,7 @@ def score_user(user_handle,user_tweets,vects):
 
 
 def match_handle(user_handle,vects):
+
     
     user_tweets = translateTweetsJson(user_handle, False, False, False, 100)[1]["content"]
 
@@ -118,10 +120,13 @@ def match_handle(user_handle,vects):
     top_words = score_user(user_handle,user_tweets,vects)
     final_result = []
     for i,name in enumerate(screen_names):
-        result = [i+1,match_val[name],leader_country[name],name,top_words[name]]
+        result = [match_val[name],leader_country[name],name,top_words[name]]
         final_result.append(result)
 
     final_result.sort(key=lambda  x:x[0], reverse=True)
+
+    for i,result in enumerate(final_result):
+        final_result[i].insert(0,i+1)
     return final_result
 
 # print (match_handle("jc_varela"))
