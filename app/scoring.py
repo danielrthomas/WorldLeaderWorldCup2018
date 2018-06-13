@@ -73,7 +73,8 @@ def compute_idf():
 def leader_user_score(user_name,user_tweets):
     similar_scores = {}
     vectorizer = TfidfVectorizer (stop_words='english')
-
+    fnew1 = open("/home/infolab/apps/WorldCup/app/leaderlog.log", "w")
+    fnew1.write("iterating over leaders\n")
     for name in screen_names:
         try:
             with open ("/home/infolab/apps/WorldCup/app/JSONs/" + name.lower (), "r") as f:
@@ -83,10 +84,12 @@ def leader_user_score(user_name,user_tweets):
             with open ("JSONs/" + name.lower (), "r") as f:
                 for line in f:
                     data = json.loads(line)
-        tfidf = vectorizer.fit_transform([user_tweets.split(), data[1]["content"]])
-
+        fnew1.write("fitting\n")
+        tfidf = vectorizer.fit_transform([user_tweets, data[1]["content"]])
+        fnew1.write("fitted\n")
         #cosine similarity
         similar_scores[name] = ((tfidf * tfidf.T).A)[0, 1]
+        fnew1.write("scores\n")
 
     return similar_scores
 
