@@ -138,10 +138,10 @@ def match_handle(user_handle,vects):
     fnew.write("user_tweets: " + user_tweets)
 
     match_val = leader_user_score(user_handle,user_tweets)
-    f.write("match_val: " + str(match_val))
+    fnew.write("match_val: " + str(match_val))
 
     top_words = score_user(user_handle,user_tweets,vects)
-    f.write("top_words: " + str(top_words))
+    fnew.write("top_words: " + str(top_words))
 
     final_result = []
     for i,name in enumerate(screen_names):
