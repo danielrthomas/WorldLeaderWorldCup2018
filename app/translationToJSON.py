@@ -93,10 +93,10 @@ def process(chunk):
     if translate == None:
         translate = Translator()
     try:
-        return checkForEnglish(translation(chunk)) + " "        
+        return checkForEnglish(translation(chunk)) + " "
         #return process_names(checkForEnglish(translation(chunk))) + " "
     except:
-        return "no words"
+        return ""
     # try:
     #     f.write("process1\n")
     #     return process_names(checkForEnglish(translation(chunk))) + " "
