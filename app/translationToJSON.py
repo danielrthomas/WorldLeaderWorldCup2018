@@ -46,7 +46,8 @@ def translation(line):
     global f
     here = splitElimination(line)
     f.write("translation\n")
-    return (translate.translate(here)).text
+    #return (translate.translate(here)).text
+    return (Translator().translate(here)).text
 
 
 def process_names(tokens):
