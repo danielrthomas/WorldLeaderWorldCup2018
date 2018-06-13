@@ -95,10 +95,10 @@ def process(chunk):
     try:
         return process_names(checkForEnglish(translation(chunk))) + " "
     except:
-        return "no words"
-    try:
-        f.write("process1\n")
-        return process_names(checkForEnglish(translation(chunk))) + " "
+        return ""
+    # try:
+    #     f.write("process1\n")
+    #     return process_names(checkForEnglish(translation(chunk))) + " "
     # except:
     #     try:
     #         translate = Translator()
