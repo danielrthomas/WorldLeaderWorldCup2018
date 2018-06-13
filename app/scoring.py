@@ -73,7 +73,8 @@ def compute_idf():
 def leader_user_score(user_name,user_tweets):
     similar_scores = {}
     vectorizer = TfidfVectorizer (stop_words='english')
-
+    fnew1 = open("/home/infolab/apps/WorldCup/app/leaderlog.log", "w")
+    fnew1.write("iterating over leaders\n")
     for name in screen_names:
         try:
             with open ("/home/infolab/apps/WorldCup/app/JSONs/" + name.lower (), "r") as f:
@@ -83,10 +84,12 @@ def leader_user_score(user_name,user_tweets):
             with open ("JSONs/" + name.lower (), "r") as f:
                 for line in f:
                     data = json.loads(line)
+        fnew1.write("fitting\n")
         tfidf = vectorizer.fit_transform([user_tweets, data[1]["content"]])
-
+        fnew1.write("fitted\n")
         #cosine similarity
         similar_scores[name] = ((tfidf * tfidf.T).A)[0, 1]
+        fnew1.write("scores\n")
 
     return similar_scores
 
@@ -131,23 +134,14 @@ def score_user(user_handle,user_tweets,vects):
 def match_handle(user_handle,vects):
     fnew = open("/home/infolab/apps/WorldCup/app/logscore.log", "w")
     fnew.write("matching handle")
-    start = time.time()
     user_tweets = translateTweetsJson(user_handle, False, False, False, 100)[1]["content"]
     fnew.write("user_tweets: " + user_tweets)
-    end = time.time()
-    print("translateTweetsJson "+str(end - start))
 
-    start = time.time()
     match_val = leader_user_score(user_handle,user_tweets)
-    f.write("match_val: " + str(match_val))
-    end = time.time()
-    print("leader_user_score "+str(end - start))
+    fnew.write("match_val: " + str(match_val))
 
-    start = time.time()
     top_words = score_user(user_handle,user_tweets,vects)
-    f.write("top_words: " + str(top_words))
-    end = time.time()
-    print("score_user "+str(end - start))
+    fnew.write("top_words: " + str(top_words))
 
     final_result = []
     for i,name in enumerate(screen_names):
