@@ -124,7 +124,7 @@ def score_user(user_handle,user_tweets,vects):
               idf_score = tfidf_vect.idf_[idf_index]
               word_score = user_tweets.count(unique_word) * idf_score
               word_scores.append((word_score,unique_word))
-          else:
+            else:
               word_scores.append((0.,unique_word))
         if word_scores != []:
             fnew2.write("sorting word_scores\n")
