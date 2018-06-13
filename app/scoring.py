@@ -131,6 +131,7 @@ def match_handle(user_handle,vects):
 
     start = time.time()
     user_tweets = translateTweetsJson(user_handle, False, False, False, 100)[1]["content"]
+    user_tweets = user_tweets.split()
     end = time.time()
     print("translateTweetsJson "+str(end - start))
 
@@ -142,8 +143,8 @@ def match_handle(user_handle,vects):
     start = time.time()
     top_words = score_user(user_handle,user_tweets,vects)
     end = time.time()
-    print("score_user "+str(end - start))   
-    
+    print("score_user "+str(end - start))
+
     final_result = []
     for i,name in enumerate(screen_names):
         result = [match_val[name],leader_country[name],name,top_words[name]]
