@@ -4,7 +4,7 @@ from flask import Flask,render_template_string,request,render_template
 from scoring import match_handle, compute_idf
 app = Flask(__name__)
 
-compute_idf()
+#compute_idf()
 try:
     vects = pickle.load (open ("/home/infolab/apps/WorldCup/app/pickle/some_file_name", "rb"))
 except:
