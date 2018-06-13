@@ -95,10 +95,17 @@ def leader_user_score(user_name,user_tweets):
 
 
 def score_user(user_handle,user_tweets,vects):
+    fnew2 = open("/home/infolab/apps/WorldCup/app/userlog.log", "w")
     similar_word_scores = {}
     words = list (set (user_tweets.split (" ")))
-
+    fnew2.write("iterating over leaders?\n")
     for name in screen_names:
+        fnew2.write("name: " + str(name) + '\n')
+        if name.lower() in vects.keys():
+            fnew2.write(name + " exists\n")
+        else:
+            fnew2.write(name + " doesn't exist skipping\n")
+            continue
         word_scores = []
         tfidf_vect = vects[name.lower()]
 
@@ -117,12 +124,19 @@ def score_user(user_handle,user_tweets,vects):
               idf_score = tfidf_vect.idf_[idf_index]
               word_score = user_tweets.count(unique_word) * idf_score
               word_scores.append((word_score,unique_word))
-
-        word_scores.sort (key=lambda x: x[0], reverse=True)
+            else:
+              word_scores.append((0.,unique_word))
+        if word_scores != []:
+            fnew2.write("sorting word_scores\n")
+            word_scores.sort (key=lambda x: x[0], reverse=True)
+        else:
+            fnew2.write("cant sort empty list\n")
+        fnew2.write("word_cores: " + str(word_scores) + '\n')
         if len(word_scores) < 5:
-            word_scores = [('',''),('',''),('',''),('',''),('','')]
+            word_scores = [(0.,''),(0.,''),(0.,''),(0.,''),(0.,'')]
         similar_word_scores[name] = word_scores[:5]
-
+        fnew2.write("adding to dict\n")
+    fnew2.write("returning\n")
     return similar_word_scores
 
 
@@ -141,7 +155,7 @@ def match_handle(user_handle,vects):
     fnew.write("match_val: " + str(match_val))
 
     top_words = score_user(user_handle,user_tweets,vects)
-    fnew.write("top_words: " + str(top_words))
+    fnew.write("top_words: ")
 
     final_result = []
     for i,name in enumerate(screen_names):
