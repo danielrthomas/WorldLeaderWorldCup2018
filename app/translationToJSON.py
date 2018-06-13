@@ -61,6 +61,7 @@ def process_names(tokens):
     for x in tokens:
         sent = sent + " " + x[0]
     f.write("process_names\n")
+    f.write("SENT: " + sent)
     return sent
 
 
