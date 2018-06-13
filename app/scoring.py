@@ -83,7 +83,7 @@ def leader_user_score(user_name,user_tweets):
             with open ("JSONs/" + name.lower (), "r") as f:
                 for line in f:
                     data = json.loads(line)
-        tfidf = vectorizer.fit_transform([user_tweets, data[1]["content"]])
+        tfidf = vectorizer.fit_transform([user_tweets.split(), data[1]["content"]])
 
         #cosine similarity
         similar_scores[name] = ((tfidf * tfidf.T).A)[0, 1]
