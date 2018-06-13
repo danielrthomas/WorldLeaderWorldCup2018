@@ -100,32 +100,36 @@ def score_user(user_handle,user_tweets,vects):
     words = list (set (user_tweets.split (" ")))
     fnew2.write("iterating over leaders?\n")
     for name in screen_names:
-        word_scores = []
-        tfidf_vect = vects[name.lower()]
+        try:
+            word_scores = []
+            tfidf_vect = vects[name.lower()]
 
-        # print (user_tweets)
-        # for unique_word in set(user_tweets.split(" ")):
-        # print (words)
-        # exit()
+            # print (user_tweets)
+            # for unique_word in set(user_tweets.split(" ")):
+            # print (words)
+            # exit()
 
-        for unique_word in words:
+            for unique_word in words:
 
-            #is the word in idf dictionary?
-            if unique_word in tfidf_vect.get_feature_names():
-              #word importance weight
+                #is the word in idf dictionary?
+                if unique_word in tfidf_vect.get_feature_names():
+                  #word importance weight
 
-              idf_index = tfidf_vect.get_feature_names().index(unique_word)
-              idf_score = tfidf_vect.idf_[idf_index]
-              word_score = user_tweets.count(unique_word) * idf_score
-              word_scores.append((word_score,unique_word))
-        fnew2.write("sorting word_scores\n")
-        if word_scores != []:
-            word_scores.sort (key=lambda x: x[0], reverse=True)
-        fnew2.write("word_cores: " + str(word_scores) + '\n')
-        if len(word_scores) < 5:
-            word_scores = [('',''),('',''),('',''),('',''),('','')]
-        similar_word_scores[name] = word_scores[:5]
-        fnew2.write("adding to dict\n")
+                  idf_index = tfidf_vect.get_feature_names().index(unique_word)
+                  idf_score = tfidf_vect.idf_[idf_index]
+                  word_score = user_tweets.count(unique_word) * idf_score
+                  word_scores.append((word_score,unique_word))
+            fnew2.write("sorting word_scores\n")
+            if word_scores != []:
+                word_scores.sort (key=lambda x: x[0], reverse=True)
+            fnew2.write("word_cores: " + str(word_scores) + '\n')
+            if len(word_scores) < 5:
+                word_scores = [('',''),('',''),('',''),('',''),('','')]
+            similar_word_scores[name] = word_scores[:5]
+            fnew2.write("adding to dict\n")
+        except:
+            fnew2.write("exception\n")
+            similar_word_scores[name] = [('',''),('',''),('',''),('',''),('','')]
     fnew2.write("returning\n")
     return similar_word_scores
 
