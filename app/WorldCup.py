@@ -11,8 +11,7 @@ except:
     vects = pickle.load (open ("pickle/some_file_name", "rb"))
 
 @app.route('/')
-# def main():
-#     return render_template('input_handle.html')
+
 def main():
     handle = request.args.get('handle')
     if handle == None or handle == '':

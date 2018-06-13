@@ -90,7 +90,12 @@ def checkCountry(word):
 def process(chunk):
     global translate
     global f
-    return process_names(checkForEnglish(translation(chunk))) + " "
+    if translate == None:
+        translate = Translator()
+    try:
+        return process_names(checkForEnglish(translation(chunk))) + " "
+    except:
+        return "no words"
     # try:
     #     f.write("process1\n")
     #     return process_names(checkForEnglish(translation(chunk))) + " "
