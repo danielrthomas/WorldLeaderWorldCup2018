@@ -46,20 +46,20 @@ def translation(line):
     global f
     here = splitElimination(line)
     f.write("translation\n")
-    #return (translate.translate(here)).text
-    return (Translator().translate(here)).text
+    return (translate.translate(here)).text
 
 
 def process_names(tokens):
     global f
     f.write("process_names_start\n")
-    here = nltk.ne_chunk(nltk.pos_tag(tokens))
+    # here = nltk.ne_chunk(nltk.pos_tag(tokens))
     #f.write(here)
     sent = ''
-    for x in here:
-        if not hasattr(x, 'label') and not isinstance(x, nltk.Tree):
-            sent = sent + " " + x[0]
-
+    # for x in here:
+    #     if not hasattr(x, 'label') and not isinstance(x, nltk.Tree):
+    #         sent = sent + " " + x[0]
+    for x in tokens:
+        sent = sent + " " + x[0]
     f.write("process_names\n")
     return sent
 
@@ -75,9 +75,9 @@ def checkForEnglish(line):
     newline = []
     for word in tokens:
         f.write(word + " WORDHERE\n")
-        #if ((len(word) == 1 and word.lower() in ['i','a']) or (len(word) > 2 and word != 'amp' and dictionary.check(word.lower()) and not checkCountry(word))) and word.lower() not in remove:
-        #    newline.append(word)
-        newline.append(word)
+        if ((len(word) == 1 and word.lower() in ['i','a']) or (len(word) > 2 and word != 'amp' and dictionary.check(word.lower()) and not checkCountry(word))) and word.lower() not in remove:
+            newline.append(word)
+
     f.write("checkEnglish\n")
     return newline
 
@@ -94,8 +94,8 @@ def process(chunk):
     if translate == None:
         translate = Translator()
     try:
-        return checkForEnglish(translation(chunk)) + " "
-        #return process_names(checkForEnglish(translation(chunk))) + " "
+        #return checkForEnglish(translation(chunk)) + " "
+        return process_names(checkForEnglish(translation(chunk))) + " "
     except:
         return ""
     # try:
