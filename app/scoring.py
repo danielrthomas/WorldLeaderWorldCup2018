@@ -101,7 +101,7 @@ def score_user(user_handle,user_tweets,vects):
     fnew2.write("iterating over leaders?\n")
     for name in screen_names:
         fnew2.write("name: " + str(name) + '\n')
-        if name.lower() in vects.keys()
+        if name.lower() in vects.keys():
             fnew2.write(name + " exists\n")
         else:
             fnew2.write(name + " doesn't exist skipping\n")
