@@ -100,9 +100,12 @@ def score_user(user_handle,user_tweets,vects):
     words = list (set (user_tweets.split (" ")))
     fnew2.write("iterating over leaders?\n")
     for name in screen_names:
-        if name == "ppkamigo":
-            continue
         fnew2.write("name: " + str(name) + '\n')
+        if name.lower() in vects.keys()
+            fnew2.write(name + " exists\n")
+        else:
+            fnew2.write(name + " doesn't exist skipping\n")
+            continue
         word_scores = []
         tfidf_vect = vects[name.lower()]
 
