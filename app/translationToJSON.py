@@ -90,17 +90,23 @@ def checkCountry(word):
 def process(chunk):
     global translate
     global f
+    if translate == None:
+        translate = Translator()
+    try:
+        return process_names(checkForEnglish(translation(chunk))) + " "
+    except:
+        return "no words"
     try:
         f.write("process1\n")
         return process_names(checkForEnglish(translation(chunk))) + " "
-    except:
-        try:
-            translate = Translator()
-            f.write("process2\n")
-            return process_names(checkForEnglish(translation(chunk))) + " "
-        except:
-            f.write("process3\n")
-            return ""
+    # except:
+    #     try:
+    #         translate = Translator()
+    #         f.write("process2\n")
+    #         return process_names(checkForEnglish(translation(chunk))) + " "
+    #     except:
+    #         f.write("process3\n")
+    #         return ""
 
 
 def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, saveTranslation=False, quant=4000):
