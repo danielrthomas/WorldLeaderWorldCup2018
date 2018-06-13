@@ -138,6 +138,7 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
             chunk += word + " "
 
     output += (re.sub(' +', ' ', process(chunk))).lower()
+    f.write(output)
     tweetDict[1]["content"] = output
     if saveTranslation:
         with open("JSONs/" + screen_name.lower(), "w") as f:
