@@ -124,12 +124,16 @@ def score_user(user_handle,user_tweets,vects):
               idf_score = tfidf_vect.idf_[idf_index]
               word_score = user_tweets.count(unique_word) * idf_score
               word_scores.append((word_score,unique_word))
-        fnew2.write("sorting word_scores\n")
+          else:
+              word_scores.append((0.,unique_word))
         if word_scores != []:
+            fnew2.write("sorting word_scores\n")
             word_scores.sort (key=lambda x: x[0], reverse=True)
+        else:
+            fnew2.write("cant sort empty list\n")
         fnew2.write("word_cores: " + str(word_scores) + '\n')
         if len(word_scores) < 5:
-            word_scores = [('',''),('',''),('',''),('',''),('','')]
+            word_scores = [(0.,''),(0.,''),(0.,''),(0.,''),(0.,'')]
         similar_word_scores[name] = word_scores[:5]
         fnew2.write("adding to dict\n")
     fnew2.write("returning\n")
