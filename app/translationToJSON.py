@@ -59,7 +59,8 @@ def process_names(tokens):
     #     if not hasattr(x, 'label') and not isinstance(x, nltk.Tree):
     #         sent = sent + " " + x[0]
     for x in tokens:
-        sent = sent + " " + x
+        if len(x) >= 3 or not x.isdigit():
+            sent = sent + " " + x
     f.write("process_names\n")
     f.write("SENT: " + sent)
     return sent
