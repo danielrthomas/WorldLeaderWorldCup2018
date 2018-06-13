@@ -119,11 +119,13 @@ def score_user(user_handle,user_tweets,vects):
               word_score = user_tweets.count(unique_word) * idf_score
               word_scores.append((word_score,unique_word))
         fnew2.write("sorting word_scores\n")
-        word_scores.sort (key=lambda x: x[0], reverse=True)
+        if word_scores != []:
+            word_scores.sort (key=lambda x: x[0], reverse=True)
         fnew2.write("word_cores: " + str(word_scores) + '\n')
         if len(word_scores) < 5:
             word_scores = [('',''),('',''),('',''),('',''),('','')]
         similar_word_scores[name] = word_scores[:5]
+        fnew2.write("adding to dict\n")
     fnew2.write("returning\n")
     return similar_word_scores
 
