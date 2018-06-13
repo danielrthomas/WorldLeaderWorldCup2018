@@ -75,9 +75,9 @@ def checkForEnglish(line):
     newline = []
     for word in tokens:
         f.write(word + " WORDHERE\n")
-        if ((len(word) == 1 and word.lower() in ['i','a']) or (len(word) > 2 and word != 'amp' and dictionary.check(word.lower()) and not checkCountry(word))) and word.lower() not in remove:
-            newline.append(word)
-
+        #if ((len(word) == 1 and word.lower() in ['i','a']) or (len(word) > 2 and word != 'amp' and dictionary.check(word.lower()) and not checkCountry(word))) and word.lower() not in remove:
+        #    newline.append(word)
+        newline.append(word)
     f.write("checkEnglish\n")
     return newline
 
