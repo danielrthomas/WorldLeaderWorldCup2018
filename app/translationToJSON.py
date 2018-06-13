@@ -52,14 +52,16 @@ def translation(line):
 def process_names(tokens):
     global f
     f.write("process_names_start\n")
-    here = nltk.ne_chunk(nltk.pos_tag(tokens))
+    # here = nltk.ne_chunk(nltk.pos_tag(tokens))
     #f.write(here)
     sent = ''
-    for x in here:
-        if not hasattr(x, 'label') and not isinstance(x, nltk.Tree):
-            sent = sent + " " + x[0]
-
+    # for x in here:
+    #     if not hasattr(x, 'label') and not isinstance(x, nltk.Tree):
+    #         sent = sent + " " + x[0]
+    for x in tokens:
+        sent = sent + " " + x
     f.write("process_names\n")
+    f.write("SENT: " + sent)
     return sent
 
 
@@ -74,8 +76,9 @@ def checkForEnglish(line):
     newline = []
     for word in tokens:
         f.write(word + " WORDHERE\n")
-        if ((len(word) == 1 and word.lower() in ['i','a']) or (len(word) > 2 and word != 'amp' and dictionary.check(word.lower()) and not checkCountry(word))) and word.lower() not in remove:
-            newline.append(word)
+        #if ((len(word) == 1 and word.lower() in ['i','a']) or (len(word) > 2 and word != 'amp' and dictionary.check(word.lower()) and not checkCountry(word))) and word.lower() not in remove:
+        #    newline.append(word)
+        newline.append(word)
 
     f.write("checkEnglish\n")
     return newline
@@ -93,9 +96,10 @@ def process(chunk):
     if translate == None:
         translate = Translator()
     try:
+        #return checkForEnglish(translation(chunk)) + " "
         return process_names(checkForEnglish(translation(chunk))) + " "
     except:
-        return "no words"
+        return ""
     # try:
     #     f.write("process1\n")
     #     return process_names(checkForEnglish(translation(chunk))) + " "
@@ -134,6 +138,7 @@ def translateTweetsJson(screen_name, include_retweets=False, saveTweets=False, s
             chunk += word + " "
 
     output += (re.sub(' +', ' ', process(chunk))).lower()
+    f.write(output)
     tweetDict[1]["content"] = output
     if saveTranslation:
         with open("JSONs/" + screen_name.lower(), "w") as f:
