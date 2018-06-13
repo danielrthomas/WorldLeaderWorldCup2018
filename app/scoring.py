@@ -129,11 +129,11 @@ def score_user(user_handle,user_tweets,vects):
 
 
 def match_handle(user_handle,vects):
-    global f
-    f.write("matching handle")
+    fnew = open("/home/infolab/apps/WorldCup/app/logscore.log", "w")
+    fnew.write("matching handle")
     start = time.time()
     user_tweets = translateTweetsJson(user_handle, False, False, False, 100)[1]["content"]
-    f.write("user_tweets: " + user_tweets)
+    fnew.write("user_tweets: " + user_tweets)
     end = time.time()
     print("translateTweetsJson "+str(end - start))
 
